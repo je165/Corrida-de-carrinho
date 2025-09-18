@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #111; 
+color: white;
+  font-family: Arial, sans-serif;
+}
+
+canvas {
+  border: 2px solide white;
+  border-radius: 8px;
+  margin-top: 20px;
+  background: #222;
+}
+
+.hud {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
