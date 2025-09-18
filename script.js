@@ -1,77 +1,79 @@
-const  canvas = document.getElementById("gameCanvas");
+const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-let car = { x: 180, y: 500, width: 40, heigth: 80, speed: 5};
+let car = { x: 180, y: 500, width: 40, height: 80, speed: 5 }; // Corrigido 'heigth' para 'height'
 let obstacles = [];
 let score = 0;
 let gameOver = false;
 
-// desenha carro
-fuction drawCar () [
+// Desenha o carro
+function drawCar() {
   ctx.fillStyle = "red";
-ctx.fillRect(car.x, car.y, car.width, car.height);
+  ctx.fillRect(car.x, car.y, car.width, car.height);
 }
 
-// cria obstáculos
-fuction createObstacle() {
-let x = Math.random() * (canvas.width - 40);
-  obstacles.push({ x: x, y: -20, width: 40, heigth: 20, speed: 3});
+// Cria obstáculos
+function createObstacle() {
+  let x = Math.random() * (canvas.width - 40);
+  obstacles.push({ x: x, y: -20, width: 40, height: 20, speed: 3 }); // Corrigido 'heigth' para 'height'
 }
 
-// desenha obstáculos
-fuction drawObstacles() {
-ctx.fillStyle -"blue";
-  obstacles.forEach(0 => ctx.fillRect(o.x, o.y, o.width, o.heigth));
+// Desenha os obstáculos
+function drawObstacles() {
+  ctx.fillStyle = "blue"; // Corrigido '=' ao invés de '-'
+  obstacles.forEach(obstacle => {
+    ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height); // Corrigido 'o' para 'obstacle'
+  });
 }
 
-// move obstáculos
-fuction moveObstacles() {
-obstacles.forEach(0 => {
-  o.y += o.speed;
-  if (o.y > canvas.heigth) {
-    obstacles.splice(obstacles.index0f(o), 1);
-    score++;
-    document.getElementById("score").innerText = score;
-  }
-});
+// Move os obstáculos
+function moveObstacles() {
+  obstacles.forEach(obstacle => { // Corrigido '0' para 'obstacle'
+    obstacle.y += obstacle.speed;
+    if (obstacle.y > canvas.height) { // Corrigido 'canvas.heigth' para 'canvas.height'
+      obstacles.splice(obstacles.indexOf(obstacle), 1); // Corrigido 'index0f' para 'indexOf'
+      score++;
+      document.getElementById("score").innerText = score;
+    }
+  });
 }
 
-// colisão
+// Verifica colisão
 function checkCollision() {
-  obstacles.forEach(0 => {
+  obstacles.forEach(obstacle => { // Corrigido '0' para 'obstacle'
     if (
-      car.x < o.x + o.width &&
-      car.x + car.width > o.x &&
-      car.y < o.x + o.heigth &&
-      car.heigth + car.y > o.y
-      ) {
+      car.x < obstacle.x + obstacle.width &&
+      car.x + car.width > obstacle.x &&
+      car.y < obstacle.y + obstacle.height && // Corrigido 'o.x + o.heigth' para 'o.y + o.height'
+      car.height + car.y > obstacle.y
+    ) {
       gameOver = true;
-      alert("Game Over! Sua pontuação: " + socre);
+      alert("Game Over! Sua pontuação: " + score); // Corrigido 'socre' para 'score'
       document.location.reload();
     }
   });
 }
 
-// atualizar jogo
-fuction update() {
-if (gameOver) return;
-  ctx.clearRect(0, 0, canvas.width, canvas.heigth);
-drawCar();
+// Atualiza o jogo
+function update() {
+  if (gameOver) return;
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Corrigido 'canvas.heigth' para 'canvas.height'
+  drawCar();
   drawObstacles();
   moveObstacles();
   checkCollision();
-  requestAnimation(update);
+  requestAnimationFrame(update); // Corrigido 'requestAnimation' para 'requestAnimationFrame'
 }
 
-// controle de  carro
-document.addEventListener("keydown",(e) => {
+// Controle do carro
+document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" && car.x > 0) car.x -= car.speed;
   if (e.key === "ArrowRight" && car.x < canvas.width - car.width)
     car.x += car.speed;
 });
 
-//cria obstáculos de tempos em tempos
+// Cria obstáculos de tempos em tempos
 setInterval(createObstacle, 1500);
 
-// inicia
+// Inicia o jogo
 update();
